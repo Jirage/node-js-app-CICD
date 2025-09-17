@@ -5,7 +5,7 @@ pipeline {
         SERVER_IP      = '100.24.46.221'
         SSH_CREDENTIAL = 'Jenkins_Node_Server'
         REPO_URL       = 'https://github.com/Jirage/node-js-app-CICD.git'
-        BRANCH         = 'main'
+        BRANCH         = 'master'
         REMOTE_USER    = 'ubuntu'
         REMOTE_PATH    = '/home/ubuntu/node-app'
     }
