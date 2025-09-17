@@ -28,6 +28,27 @@ pipeline {
             }
         }
 
+        stage('Install Node.js & PM2') {
+            steps {
+                sshagent([SSH_CREDENTIAL]) {
+                    sh """
+                        ssh -o StrictHostKeyChecking=no ${REMOTE_USER}@${SERVER_IP} '
+                            # Install Node.js (LTS) if not already installed
+                            if ! command -v node > /dev/null; then
+                                curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+                                sudo apt install -y nodejs
+                            fi
+
+                            # Install PM2 globally if not installed
+                            if ! command -v pm2 > /dev/null; then
+                                sudo npm install -g pm2
+                            fi
+                        '
+                    """
+                }
+            }
+        }
+
         stage('Install Dependencies & Start App') {
             steps {
                 sshagent([SSH_CREDENTIAL]) {
@@ -52,4 +73,3 @@ pipeline {
         }
     }
 }
-
